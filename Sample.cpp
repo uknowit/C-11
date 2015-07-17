@@ -16,7 +16,8 @@ void function_handler(BaseClass* baseObj)
 	if(NULL!=normalObj)
 		std::cout<<"Non polymorphic target"<<std::endl;
 }
-int main() {
+int main() 
+{
 	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
 	string date="16-07-2015";
 	DerivedClass* dClass=new DerivedClass(date);
