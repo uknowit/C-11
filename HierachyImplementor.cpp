@@ -6,6 +6,7 @@
  */
 #include "../include/BaseClass.hpp"
 #include "../include/DerivedClass.hpp"
+#include <iostream>
 
 BaseClass::BaseClass(std::string& className)
 {
@@ -16,6 +17,11 @@ BaseClass::BaseClass(std::string& className)
 BaseClass* BaseClass::clone_object()
 {
 	return this;
+}
+
+void NormalClass::sampleFunction()
+{
+	std::cout<<"Printing from Normal class"<<std::endl;
 }
 
 std::string DerivedClass::get_name()

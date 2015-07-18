@@ -17,5 +17,8 @@ private:
 
 };
 
-class NormalClass {};
+class NormalClass {
+	public:
+		void sampleFunction();
+};
 #endif

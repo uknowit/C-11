@@ -15,4 +15,13 @@ private:
 	std::string m_ClassName;
 };
 
+class AnotherDerivedClass:public BaseClass {
+public:
+	AnotherDerivedClass(std::string& className):BaseClass(className)
+	{
+
+	}
+	virtual std::string get_name(){return "AnotherDerivedClass";}
+};
+
 #endif
