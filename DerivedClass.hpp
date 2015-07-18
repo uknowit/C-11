@@ -15,6 +15,13 @@ private:
 	std::string m_ClassName;
 };
 
+class SecondOrderDerivedClass:public DerivedClass {
+public:
+	SecondOrderDerivedClass(std::string& className):DerivedClass(className)
+	{
+	}
+};
+
 class AnotherDerivedClass:public BaseClass {
 public:
 	AnotherDerivedClass(std::string& className):BaseClass(className)

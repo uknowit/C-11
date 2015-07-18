@@ -7,6 +7,7 @@
 //============================================================================
 
 #include <iostream>
+#include <typeinfo>
 #include "../include/DerivedClass.hpp"
 /*
  * Derived class
@@ -29,21 +30,34 @@ using namespace std;
 void function_handler(BaseClass* baseObj)
 {
 	NormalClass* normalObj=dynamic_cast<NormalClass*>(baseObj);
+	void* addr=dynamic_cast<NormalClass*>(baseObj);
 	if(NULL!=normalObj)
 	{
 		std::cout<<"Non polymorphic target"<<std::endl;
 		normalObj->sampleFunction();
+		std::cout<<addr<<std::endl;//printing starting address of polymorphic type
 	}
 	else
 	{
-		std::cout<<"Dynamic cast returned NULL";
+		std::cout<<"Dynamic cast returned NULL"<<std::endl;;
 	}
 }
-<<<<<<< HEAD
+
+void reference_handler(BaseClass& baseRef)
+{
+	try
+	{
+		NormalClass normalClassRef=dynamic_cast<NormalClass&>(baseRef);
+		normalClassRef.sampleFunction();
+		std::cout<<&normalClassRef<<std::endl;
+	}
+	catch(const std::bad_cast& castExp)
+	{
+		std::cout<<"bad_cast exception thrown. Handling it..."<<std::endl;
+	}
+}
+
 int main()
-=======
-int main() 
->>>>>>> 8a6a66dc388593befadf08de28fa4613c2af4c7e
 {
 	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
 	string date="16-07-2015";
@@ -55,5 +69,9 @@ int main()
 	function_handler(dObj);
 	AnotherDerivedClass* adObj= new AnotherDerivedClass(date);
 	function_handler(adObj);
+	DerivedClass dReference(date);
+	reference_handler(dReference);
+	AnotherDerivedClass adReference(date);
+	reference_handler(adReference);
 	return 0;
 }
