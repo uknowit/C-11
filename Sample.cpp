@@ -39,7 +39,11 @@ void function_handler(BaseClass* baseObj)
 		std::cout<<"Dynamic cast returned NULL";
 	}
 }
+<<<<<<< HEAD
 int main()
+=======
+int main() 
+>>>>>>> 8a6a66dc388593befadf08de28fa4613c2af4c7e
 {
 	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
 	string date="16-07-2015";
