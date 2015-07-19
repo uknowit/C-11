@@ -9,6 +9,8 @@
 #include <iostream>
 #include <typeinfo>
 #include "../include/DerivedClass.hpp"
+#include "../include/DoubleDispatcher.hpp"
+#include <vector>
 /*
  * Derived class
  *  _________
@@ -57,6 +59,15 @@ void reference_handler(BaseClass& baseRef)
 	}
 }
 
+void test(Triangle& t, Circle& c)
+{
+	std::vector<std::pair<Shape*,Shape*>> vs{ {&t,&t}, {&t,&c}, {&c,&t}, {&c,&c} };
+	for (auto p : vs)
+	{
+		p.first->intersect(*p.second);
+	}
+}
+
 int main()
 {
 	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
@@ -73,5 +84,9 @@ int main()
 	reference_handler(dReference);
 	AnotherDerivedClass adReference(date);
 	reference_handler(adReference);
+	Triangle triniityTriangle;
+	Circle trinityCircle;
+	test(triniityTriangle,trinityCircle);
 	return 0;
+
 }
