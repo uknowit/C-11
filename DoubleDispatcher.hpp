@@ -16,6 +16,7 @@ public:
 	virtual bool intersect(const Triangle&) const =0;
 };
 
+/*https://en.wikipedia.org/wiki/C%2B%2B11#Explicit_overrides_and_final*/
 class Circle : public Shape {
 public:
 	bool intersect(const Shape&) const override;
@@ -27,7 +28,7 @@ class Triangle : public Shape {
 public:
 	bool intersect(const Shape&) const override;
 	virtual bool intersect(const Circle&) const override;
-	virtual bool intersect(const Triangle&) const override;
+	virtual bool intersect(const Triangle&) const override ;
 };
 
 #endif

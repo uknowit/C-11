@@ -6,8 +6,11 @@
  */
 #include "../include/DoubleDispatcher.hpp"
 
+// intersect(Shape&,Shape&) function with overrider specified for the desired combinations
+// check above in c++0x3
 bool Circle::intersect(const Shape& s) const
 {
+	std::cout <<"intersect(circle,shape)"<<std::endl;
 	return s.intersect(*(this));
 }
 
@@ -25,6 +28,7 @@ bool Circle::intersect(const Triangle&) const
 
 bool Triangle::intersect(const Shape& s) const
 {
+	std::cout <<"intersect(triangle,shape)"<<std::endl;
 	return s.intersect(*(this));
 }
 

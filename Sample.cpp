@@ -10,6 +10,7 @@
 #include <typeinfo>
 #include "../include/DerivedClass.hpp"
 #include "../include/DoubleDispatcher.hpp"
+#include "../include/DoubleDispatcher_vOne.hpp"
 #include <vector>
 /*
  * Derived class
@@ -59,12 +60,21 @@ void reference_handler(BaseClass& baseRef)
 	}
 }
 
-void test(Triangle& t, Circle& c)
+void test( Circle& c,Triangle& t)
 {
 	std::vector<std::pair<Shape*,Shape*>> vs{ {&t,&t}, {&t,&c}, {&c,&t}, {&c,&c} };
 	for (auto p : vs)
 	{
 		p.first->intersect(*p.second);
+	}
+}
+
+void test_vOne( Circle_vOne& c,Triangle_vOne& t)
+{
+	std::vector<std::pair<Shape_vOne*,Shape_vOne*>> vs{ {&t,&t}, {&t,&c}, {&c,&t}, {&c,&c} };
+	for (auto p : vs)
+	{
+		p.first->intersect(*p.first,*p.second);
 	}
 }
 
@@ -86,7 +96,9 @@ int main()
 	reference_handler(adReference);
 	Triangle triniityTriangle;
 	Circle trinityCircle;
-	test(triniityTriangle,trinityCircle);
+	test(trinityCircle,triniityTriangle);
+	Triangle_vOne diaryTriangle;
+	Circle_vOne diaryCircle;
+	test_vOne(diaryCircle,diaryTriangle);
 	return 0;
-
 }
