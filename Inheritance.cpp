@@ -1,6 +1,17 @@
 #include<iostream>
 #include<string>
-
+/* In public inheritance , public --> public, protected-->protected and private-->private. Derived is a Base
+ * Can be used in the interface which takes base class pointer.
+ * 
+ * In Protected inheritance , public-->protected protected-->protected and private-->private. Derived is implemented
+ * in terms of Base but not a base. Cannot be used in the interface which takes base class pointer. Can implement
+ * base class virtual function and can expose base class public and protected method in its interface.
+ *
+ * In Private inheritance, public->private, protected->private and private-->private. Derived is implemented in terms of 
+ * Base but not a base object. Cannot be used in the interface which takes base class pointer. Can implement
+ * base class virtual function and can expose base class public  method in its interface.
+ * Both protected and private child can access public, protected methods of base.
+ */
 class Base 
 {
     public:
@@ -80,6 +91,7 @@ class Derived_Protected_child:public Derived_Protected
 {
     public:
         using Base::calling_mem_fun;
+        using Base::protected_base_fun;
         void pure_private_base_fun()
         {
             std::cout<<"Have access to protected variable"<<proteced_base_variable<<std::endl;
