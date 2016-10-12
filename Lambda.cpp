@@ -8,12 +8,42 @@
 #include <vector>
 #include <iterator>
 #include <algorithm>
-
+#include <ctime>
+#include <locale>
+#include <unistd.h>
 /*
  *  Lambda signature :
  *  [capture list(reference(&) or value)](arguments) mutable -> return_type{ function_body}
  *  ex:- [&os, mod](int x) mutable ->void {}
  */
+
+class LambdaCaptureList
+{
+	public:
+		LambdaCaptureList(std::string creationTime):mCreationTime(creationTime){}
+		void invokeLambda(std::string& currentTime)
+		{
+			std::function<void()> lambdaFunc = [&, currentTime, this ]() mutable{
+				size_t pos = currentTime.find_first_of(" ");
+				currentTime = currentTime.substr(pos, currentTime.size());
+				std::cout<<"Current  time::"<<currentTime<<std::endl;
+				std::cout<<"Creation time::"<<mCreationTime<<std::endl;
+			};
+
+			std::function<void()> lambdaFuncOne = [&,  this ]() mutable{
+							size_t pos = currentTime.find_first_of(" ");
+							currentTime = currentTime.substr(pos, currentTime.size());
+							std::cout<<"Current  time::"<<currentTime<<std::endl;
+							std::cout<<"Creation time::"<<mCreationTime<<std::endl;
+						};
+			lambdaFunc();
+			std::cout<<"Current  time outside::"<<currentTime<<std::endl;
+			lambdaFuncOne();
+			std::cout<<"Current  time outside after reference::"<<currentTime<<std::endl;
+		}
+	private:
+		std::string mCreationTime;
+};
 
 void print_modulo(const std::vector<int>& myVec, std::ostream& os, int mod)
 {
@@ -74,8 +104,22 @@ void func_non_rec(std::string& str1, std::string& str2)
 	rev(&str2[0], &str2[0]+str2.size());
 }
 
+double sqrt_fun(double rational)
+{
+	return sqrt(rational);
+}
+
+void lambda_type(double aa)
+{
+	std::cout<<"Invoking with value:"<<aa<<std::endl;
+	double (*ptr2)(double) = [&](double a){
+		return sqrt(a);};//Capture by reference is not allowed;
+	std::cout<<ptr2(aa)<<std::endl;
+}
+
 int main()
 {
+	int execNum = 0;
     std::cout<<"Printing the header "<<std::endl;
 
     std::vector<int> myVec = {3, 5, 7, 8, 12, 34, 45, 65, 78, 89 , 93};
@@ -100,5 +144,26 @@ int main()
     std::cout<<"Using non-recursive function"<<std::endl;
     func_non_rec(str1, str2);
     std::cout<<str1<<" "<<str2<<std::endl;
+
+    double (*ptr1)(double) = [](double a){
+    	return sqrt(a);};
+
+    //double (*ptr3)(int) = [](double a){ return sqrt(a);}; argument is different
+    ptr1 = sqrt_fun;
+    std::cout<<ptr1(25.0)<<std::endl;
+    lambda_type(37.0881);
+    std::cout<<execNum<<std::endl;
+    std::locale::global(std::locale("en_IN.utf8"));
+    std::time_t t = std::time(NULL);
+    char mbstr[100], secStr[100];
+    if (std::strftime(mbstr, sizeof(mbstr), "%A %c", std::localtime(&t))) {
+    	std::string ls = std::string(mbstr);
+    	LambdaCaptureList lcapList(ls);
+    	usleep(2000000);
+    	std::time_t t1 = std::time(NULL);
+    	std::strftime(secStr, sizeof(secStr), "%A %c", std::localtime(&t1));
+    	std::string lslocal = std::string(secStr);
+    	lcapList.invokeLambda(lslocal);
+    }
     return 0;
 }
